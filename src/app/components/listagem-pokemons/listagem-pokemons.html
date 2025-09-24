@@ -1,0 +1,11 @@
+<div class="row g-3">
+    @for (pokemon of pokemons; track pokemon.nome) {
+        <div class="col-md-3">
+            <div class="card p-3 text-center">
+                <h5 class="card-title">{{ pokemon.nome }}</h5>
+
+                <img class="img-fluid" [src]="pokemon.urlSprite" [alt]="pokemon.nome" />
+            </div>
+        </div>
+    }
+</div>
