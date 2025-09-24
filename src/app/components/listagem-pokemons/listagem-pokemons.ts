@@ -4,6 +4,7 @@ import { Pokemon } from '../../models/pokemon';
 import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { converterParaTitleCase } from '../../util/converter-para-title-case';
 
 @Component({
   selector: 'app-listagem-pokemons',
@@ -11,7 +12,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './listagem-pokemons.html'
 })
 export class ListagemPokemons implements OnInit {
- public pokemons: Pokemon[] = [];
+  public pokemons: Pokemon[] = [];
   public mapeamentoDeCoresPorTipo = mapeamentoDeCoresPorTipo;
 
   private readonly url: string = "https://pokeapi.co/api/v2/pokemon/";
@@ -33,17 +34,10 @@ export class ListagemPokemons implements OnInit {
 
   private mapearPokemon(obj: any): Pokemon {
     return { 
-      nome: this.converterParaTitleCase(obj.name),
+      id: obj.id,
+      nome: converterParaTitleCase(obj.name),
       urlSprite: obj.sprites.front_default,
-      tipos: obj.types.map((x: any) => this.converterParaTitleCase(x.type.name))
+      tipos: obj.types.map((x: any) => converterParaTitleCase(x.type.name))
     };
-  }
-
-  private converterParaTitleCase(texto: string): string {
-    if (texto.length < 1) return texto;
-
-    const novaString = texto[0].toUpperCase() + texto.substring(1).toLowerCase();
-
-    return novaString;
   }
 }
