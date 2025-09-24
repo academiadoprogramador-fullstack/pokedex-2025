@@ -1,17 +1,19 @@
 <div class="row g-3">
     @for (pokemon of pokemons; track pokemon.nome) {
       <div class="col-md-3">
-        <div class="card p-3 text-center">
-          <h5 class="card-title">{{ pokemon.nome }}</h5>
+        <a class="text-decoration-none" routerLink="/pokemons/1">
+            <div class="card p-3 text-center">
+            <h5 class="card-title">{{ pokemon.nome }}</h5>
 
-          <div class="d-flex justify-content-center gap-2">
-              @for (tipo of pokemon.tipos; track $index) {
-                <span class="badge rounded-pill text-light fs-6" [ngClass]="mapeamentoDeCoresPorTipo[tipo]">{{tipo}}</span>
-              }
-          </div>
+            <div class="d-flex justify-content-center gap-2">
+                @for (tipo of pokemon.tipos; track $index) {
+                    <span class="badge rounded-pill text-light fs-6" [ngClass]="mapeamentoDeCoresPorTipo[tipo]">{{tipo}}</span>
+                }
+            </div>
 
-          <img [src]="pokemon.urlSprite" [alt]="pokemon.nome" />
-        </div>
+            <img [src]="pokemon.urlSprite" [alt]="pokemon.nome" />
+            </div>
+        </a>
       </div>
     }
   </div>

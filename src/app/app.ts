@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-
-import { ListagemPokemons } from './components/listagem-pokemons/listagem-pokemons';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [ListagemPokemons],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

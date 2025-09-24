@@ -3,10 +3,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Pokemon } from '../../models/pokemon';
 import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
 import { NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-listagem-pokemons',
-  imports: [NgClass],
+  imports: [NgClass, RouterLink],
   templateUrl: './listagem-pokemons.html'
 })
 export class ListagemPokemons implements OnInit {
