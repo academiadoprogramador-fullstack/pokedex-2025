@@ -1,15 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Pokemon } from '../../models/pokemon';
 import { HttpClient } from '@angular/common/http';
-import { converterParaTitleCase } from '../../util/converter-para-title-case';
+import { RouterLink } from '@angular/router';
+import { mapearPokemon } from '../../util/mapear-pokemon';
+import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-listagem-pokemons',
-  imports: [],
+  imports: [RouterLink, NgClass],
   templateUrl: './listagem-pokemons.html'
 })
 export class ListagemPokemons implements OnInit {
   public pokemons: Pokemon[] = [];
+  public mapeamentoDeCores = mapeamentoDeCoresPorTipo;
+
   private readonly url: string = "https://pokeapi.co/api/v2/pokemon/";
 
   private readonly http = inject(HttpClient);
@@ -20,18 +25,11 @@ export class ListagemPokemons implements OnInit {
 
       for (let resultado of arrayResultados) {
         this.http.get(resultado.url).subscribe(objDetalhes => {
-          const pokemon = this.mapearPokemon(objDetalhes);
+          const pokemon = mapearPokemon(objDetalhes);
 
           this.pokemons.push(pokemon);
         })
       }
     });
-  }
-
-  private mapearPokemon(obj: any): Pokemon {
-    return { 
-      nome: converterParaTitleCase(obj.name),
-      urlSprite: obj.sprites.front_default
-    };
   }
 }

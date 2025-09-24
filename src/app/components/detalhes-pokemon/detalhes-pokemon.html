@@ -1,0 +1,88 @@
+<h2>Detalhes do Pokémon</h2>
+
+<hr>
+
+@if (pokemon) {
+    <div class="row g-3 mt-3">
+
+        <div class="col-lg-4" >
+            <div class="card p-3 text-center" style="min-height: 450px;">
+                <span class="fs-5">{{pokemon.id}}</span>
+                <span class="fw-semibold fs-5">{{pokemon.nome}}</span>
+
+                <div class="d-flex justify-content-center align-items-center gap-2 mt-2">
+                    @for (tipo of pokemon.tipos; track $index) {
+                        <span class="badge rounded-pill text-light fs-6" [ngClass]="mapeamentoDeCores[tipo]">{{tipo}}</span>
+                    }
+                </div>
+                <img class="img-fluid" [src]="pokemon.urlSprite" [alt]="pokemon.nome" />
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-grid">
+                
+                <div class="d-flex justify-content-between">
+                    <h2 class="mb-0">{{ pokemon.nome}}</h2>
+
+                    <div class="d-flex justify-content-center align-items-center gap-2">
+                        @for (tipo of pokemon.tipos; track $index) {
+                            <span class="badge rounded-pill text-light fs-6" [ngClass]="mapeamentoDeCores[tipo]">{{tipo}}</span>
+                        }
+                    </div>
+                </div>
+                
+                <hr>
+
+                <section>
+                    <h3 class="fw-normal">Sprites</h3>
+                    
+                    <div class="row g-3 mt-3">
+                    @for (sprite of pokemon.sprites; track $index) {
+                        <div class="col-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <img class="img-fluid my-auto" style="max-height: 100px;" [src]="sprite">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    </div>
+                </section>
+
+                <hr>
+
+                <section>
+                    <h3 class="fw-normal">Sons</h3>
+
+                    <div class="table-responsive-lg mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="ps-3">Atual</th>
+                                    <th class="ps-3">Antigo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <audio controls style="height: 40px; max-width: 180px;" class="mt-2">
+                                            <source [src]="pokemon.sons.atual" type="audio/ogg">
+                                            Seu navegador não suporta o elemento audio.
+                                        </audio>
+                                    </td>
+                                    <td align="center">
+                                        <audio controls style="height: 40px; max-width: 180px;" class="mt-2">
+                                            <source [src]="pokemon.sons.antigo" type="audio/ogg">
+                                            Seu navegador não suporta o elemento audio.
+                                        </audio>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+}
