@@ -1,19 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-
-interface Pokemon {
-  nome: string;
-  urlSprite?: string;
-}
+import { Pokemon } from './models/pokemon';
+import { NgClass } from '@angular/common';
+import { mapeamentoDeCoresPorTipo } from './util/mapeamento-de-cores-por-tipo';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [NgClass],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
   public pokemons: Pokemon[] = [];
+  public mapeamentoDeCoresPorTipo = mapeamentoDeCoresPorTipo;
+
   private readonly url: string = "https://pokeapi.co/api/v2/pokemon/";
 
   private readonly http = inject(HttpClient);
@@ -35,7 +35,8 @@ export class App implements OnInit {
   private mapearPokemon(obj: any): Pokemon {
     return { 
       nome: this.converterParaTitleCase(obj.name),
-      urlSprite: obj.sprites.front_default
+      urlSprite: obj.sprites.front_default,
+      tipos: obj.types.map((x: any) => this.converterParaTitleCase(x.type.name))
     };
   }
 
