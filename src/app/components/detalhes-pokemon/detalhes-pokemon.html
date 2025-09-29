@@ -22,7 +22,7 @@
         <div class="d-grid">
             <div class="d-flex justify-content-between align-items-center">
                 <h2 class="mb-0">{{ detalhesDoPokemon?.nome }}</h2>
-            
+
                 <div class="d-flex justify-content-center gap-2">
                     @for (tipo of detalhesDoPokemon?.tipos; track $index) {
                         <span class="badge rounded-pill text-light fs-6" [ngClass]="mapeamentoDeCoresPorTipo[tipo]">{{tipo}}</span>
@@ -62,20 +62,24 @@
                             </tr>
                         </thead>
 
+                        @if (detalhesDoPokemon) {
                         <tbody>
                             <tr>
                                 <td>
                                     <audio controls class="mt-2" style="height: 40px; max-width: 180px;">
-                                        <source [src]="detalhesDoPokemon?.sons?.atual" type="audio/ogg">
+                                        <source [src]="detalhesDoPokemon.sons.atual" type="audio/ogg">
+                                        Seu navegador não suporta o elemento audio.
                                     </audio>
                                 </td>
                                 <td>
                                     <audio controls class="mt-2" style="height: 40px; max-width: 180px;">
-                                        <source [src]="detalhesDoPokemon?.sons?.antigo" type="audio/ogg">
+                                        <source [src]="detalhesDoPokemon.sons.antigo" type="audio/ogg">
+                                        Seu navegador não suporta o elemento audio.
                                     </audio>
                                 </td>
                             </tr>
                         </tbody>
+                        }
                     </table>
                 </div>
             </section>
