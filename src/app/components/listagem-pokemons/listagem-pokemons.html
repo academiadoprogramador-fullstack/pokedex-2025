@@ -2,11 +2,11 @@
 
 <hr />
 
-<div class="row g-2 my-3">
+<div class="row g-2 mt-3">
   @for (pokemon of pokemonsFavoritos; track pokemon.nome) {
-  <div class="col-md-1">
-    <a [routerLink]="['pokemons', pokemon.id]">
-      <div class="card">
+  <div class="col-3 col-md-1">
+    <a [routerLink]="['/pokemons', pokemon.id]" [title]="pokemon.nome">
+      <div class="card border-2 rounded-circle">
         <div class="card-body text-center">
           <img class="img-fluid" [src]="pokemon.urlSprite" [alt]="pokemon.nome" />
         </div>
@@ -16,7 +16,7 @@
   }
 </div>
 
-<div class="row g-3">
+<div class="row g-3 mt-3">
   @for (pokemon of pokemons; track pokemon.nome) {
   <div class="col-md-3">
     <app-card-pokemon

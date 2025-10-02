@@ -1,11 +1,13 @@
 import { Pokemon } from '../models/pokemon';
 
-export let pokemonsFavoritos: Pokemon[] = [];
+export const pokemonsFavoritos: Pokemon[] = [];
 
 export function alternarStatusPokemon(pokemon: Pokemon) {
   if (pokemon.favorito) {
     pokemon.favorito = false;
-    pokemonsFavoritos = pokemonsFavoritos.filter((x) => x.id != pokemon.id);
+
+    const index = pokemonsFavoritos.findIndex((x) => x.id == pokemon.id);
+    if (index > -1) pokemonsFavoritos.splice(index, 1);
   } else {
     pokemon.favorito = true;
     pokemonsFavoritos.push(pokemon);
