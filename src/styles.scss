@@ -2,6 +2,12 @@
 @use 'bootstrap';
 @use 'bootstrap-icons';
 
+.app-container-alternar-status {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .fundo-tipo-normal {
   background-color: #cbcbcb;
 }
