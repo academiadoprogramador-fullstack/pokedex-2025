@@ -5,7 +5,8 @@ import { DetalhesDoPokemon, SonsDoPokemon } from '../../models/pokemon';
 import { converterParaTitleCase } from '../../util/converter-para-title-case';
 import { NgClass } from '@angular/common';
 import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
-import { CardPokemon } from "../card-pokemon/card-pokemon";
+import { CardPokemon } from '../card-pokemon/card-pokemon';
+import { pokemonsFavoritos } from '../../util/pokemons-favoritos';
 
 @Component({
   selector: 'app-detalhes-pokemon',
@@ -48,6 +49,7 @@ export class DetalhesPokemon implements OnInit {
       nome: converterParaTitleCase(obj.name),
       urlSprite: obj.sprites.front_default,
       tipos: obj.types.map((x: any) => converterParaTitleCase(x.type.name)),
+      favorito: pokemonsFavoritos.some((x) => x.id == obj.id),
       sons: this.mapearSonsDoPokemon(obj.cries),
       sprites: sprites,
     };

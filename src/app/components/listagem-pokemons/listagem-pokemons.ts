@@ -4,14 +4,17 @@ import { Pokemon } from '../../models/pokemon';
 import { RouterLink } from '@angular/router';
 import { converterParaTitleCase } from '../../util/converter-para-title-case';
 import { CardPokemon } from '../card-pokemon/card-pokemon';
+import { alternarStatusPokemonFavorito, pokemonsFavoritos } from '../../util/pokemons-favoritos';
 
 @Component({
   selector: 'app-listagem-pokemons',
-  imports: [RouterLink, CardPokemon],
+  imports: [CardPokemon],
   templateUrl: './listagem-pokemons.html',
 })
 export class ListagemPokemons implements OnInit {
   public pokemons: Pokemon[] = [];
+
+  public alternarStatusPokemonFavorito = alternarStatusPokemonFavorito;
 
   private readonly url: string = 'https://pokeapi.co/api/v2/pokemon/';
   private readonly http = inject(HttpClient);
@@ -36,6 +39,7 @@ export class ListagemPokemons implements OnInit {
       nome: converterParaTitleCase(obj.name),
       urlSprite: obj.sprites.front_default,
       tipos: obj.types.map((x: any) => converterParaTitleCase(x.type.name)),
+      favorito: pokemonsFavoritos.some((x) => x.id == obj.id),
     };
   }
 }
