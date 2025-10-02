@@ -4,26 +4,26 @@
 
 <div class="row justify-content-center g-2 mt-3">
   @for (pokemon of pokemonsFavoritos; track pokemon.nome) {
-  <div class="col-3 col-md-1">
-    <a [routerLink]="['/pokemons', pokemon.id]" [title]="pokemon.nome">
-      <div class="card border-2 rounded-circle">
-        <div class="card-body text-center">
-          <img class="img-fluid" [src]="pokemon.urlSprite" [alt]="pokemon.nome" />
+    <div class="col-3 col-md-1">
+      <a [routerLink]="['/pokemons', pokemon.id]" [title]="pokemon.nome">
+        <div class="card border-2 rounded-circle">
+          <div class="card-body text-center">
+            <img class="img-fluid" [src]="pokemon.urlSprite" [alt]="pokemon.nome" />
+          </div>
         </div>
-      </div>
-    </a>
-  </div>
+      </a>
+    </div>
   }
 </div>
 
 <div class="row g-3 mt-3">
   @for (pokemon of pokemons; track pokemon.nome) {
-  <div class="col-md-3" style="min-height: 200px">
-    <app-card-pokemon
-      [pokemon]="pokemon"
-      [exibirLink]="true"
-      (statusFavoritoAlterado)="alternarStatusPokemon($event)"
-    ></app-card-pokemon>
-  </div>
+    <div class="col-md-3" style="min-height: 200px">
+      <app-card-pokemon
+        [pokemon]="pokemon"
+        [exibirLink]="true"
+        (statusFavoritoAlterado)="alternarStatusPokemon($event)"
+      ></app-card-pokemon>
+    </div>
   }
 </div>

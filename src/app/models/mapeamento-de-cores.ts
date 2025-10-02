@@ -1,3 +1,3 @@
 export interface MapeamentoDeCores {
-    [tipo: string]: string;
+  [tipo: string]: string;
 }

@@ -1,5 +1,9 @@
 import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter, Routes } from '@angular/router';
 import { ListagemPokemons } from './components/listagem-pokemons/listagem-pokemons';
 import { DetalhesPokemon } from './components/detalhes-pokemon/detalhes-pokemon';
@@ -15,6 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient()
-  ]
+    provideHttpClient(),
+  ],
 };
