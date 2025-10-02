@@ -5,10 +5,11 @@ import { DetalhesDoPokemon, SonsDoPokemon } from '../../models/pokemon';
 import { converterParaTitleCase } from '../../util/converter-para-title-case';
 import { NgClass } from '@angular/common';
 import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
+import { CardPokemon } from "../card-pokemon/card-pokemon";
 
 @Component({
   selector: 'app-detalhes-pokemon',
-  imports: [NgClass],
+  imports: [NgClass, CardPokemon],
   templateUrl: './detalhes-pokemon.html',
 })
 export class DetalhesPokemon implements OnInit {
