@@ -4,7 +4,10 @@
 
 <div class="row g-3">
   <div class="col-lg-4">
-    <app-card-pokemon [pokemon]="detalhesDoPokemon"></app-card-pokemon>
+    <app-card-pokemon
+      [pokemon]="detalhesDoPokemon"
+      (statusFavoritoAlterado)="alternarStatusPokemonFavorito($event)"
+    ></app-card-pokemon>
   </div>
 
   <div class="col">

@@ -6,7 +6,7 @@ import { converterParaTitleCase } from '../../util/converter-para-title-case';
 import { NgClass } from '@angular/common';
 import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
 import { CardPokemon } from '../card-pokemon/card-pokemon';
-import { pokemonsFavoritos } from '../../util/pokemons-favoritos';
+import { alternarStatusPokemonFavorito, pokemonsFavoritos } from '../../util/pokemons-favoritos';
 
 @Component({
   selector: 'app-detalhes-pokemon',
@@ -16,6 +16,7 @@ import { pokemonsFavoritos } from '../../util/pokemons-favoritos';
 export class DetalhesPokemon implements OnInit {
   public detalhesDoPokemon?: DetalhesDoPokemon;
   public mapeamentoDeCoresPorTipo = mapeamentoDeCoresPorTipo;
+  public alternarStatusPokemonFavorito = alternarStatusPokemonFavorito;
 
   private readonly url: string = 'https://pokeapi.co/api/v2/pokemon';
 
