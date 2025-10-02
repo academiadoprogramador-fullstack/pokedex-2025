@@ -5,7 +5,8 @@ import { DetalhesDoPokemon, SonsDoPokemon } from '../../models/pokemon';
 import { converterParaTitleCase } from '../../util/converter-para-title-case';
 import { NgClass } from '@angular/common';
 import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
-import { CardPokemon } from "../card-pokemon/card-pokemon";
+import { CardPokemon } from '../card-pokemon/card-pokemon';
+import { alternarStatusPokemon, pokemonsFavoritos } from '../../util/pokemons-favoritos';
 
 @Component({
   selector: 'app-detalhes-pokemon',
@@ -15,6 +16,8 @@ import { CardPokemon } from "../card-pokemon/card-pokemon";
 export class DetalhesPokemon implements OnInit {
   public detalhesDoPokemon?: DetalhesDoPokemon;
   public mapeamentoDeCoresPorTipo = mapeamentoDeCoresPorTipo;
+
+  public alternarStatusPokemon = alternarStatusPokemon;
 
   private readonly url: string = 'https://pokeapi.co/api/v2/pokemon';
 
@@ -28,8 +31,6 @@ export class DetalhesPokemon implements OnInit {
 
     this.http.get(urlCompleto).subscribe((objDetalhes) => {
       this.detalhesDoPokemon = this.mapearDetalhesDoPokemon(objDetalhes);
-
-      console.log(this.detalhesDoPokemon);
     });
   }
 
@@ -50,6 +51,7 @@ export class DetalhesPokemon implements OnInit {
       tipos: obj.types.map((x: any) => converterParaTitleCase(x.type.name)),
       sons: this.mapearSonsDoPokemon(obj.cries),
       sprites: sprites,
+      favorito: pokemonsFavoritos.some((x) => x.id == obj.id),
     };
   }
 

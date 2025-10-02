@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Pokemon } from '../../models/pokemon';
 import { NgClass } from '@angular/common';
 import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
@@ -29,6 +29,17 @@ import { RouterLink } from '@angular/router';
       </div>
 
       <img [src]="pokemon.urlSprite" [alt]="pokemon.nome" />
+
+      @if (pokemon.favorito) {
+      <button class="btn mx-auto" (click)="alternarStatusFavorito()">
+        <i class="bi bi-heart-fill fs-4 text-danger"></i>
+      </button>
+      } @else {
+
+      <button class="btn mx-auto" (click)="alternarStatusFavorito()">
+        <i class="bi bi-heart fs-4 text-danger"></i>
+      </button>
+      }
     </div>
     }
   `,
@@ -37,5 +48,11 @@ export class CardPokemon {
   @Input({ required: true }) public pokemon?: Pokemon;
   @Input({ required: false }) public exibirLink: boolean = false;
 
+  @Output() public statusFavoritoAlterado: EventEmitter<Pokemon> = new EventEmitter<Pokemon>();
+
   public mapeamentoDeCoresPorTipo = mapeamentoDeCoresPorTipo;
+
+  public alternarStatusFavorito() {
+    this.statusFavoritoAlterado.emit(this.pokemon);
+  }
 }
