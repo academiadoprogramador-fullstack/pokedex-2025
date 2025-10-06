@@ -1,47 +1,26 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { Pokemon } from '../../models/pokemon';
-import { converterParaTitleCase } from '../../util/converter-para-title-case';
 import { CardPokemon } from '../card-pokemon/card-pokemon';
 import { alternarStatusPokemon, pokemonsFavoritos } from '../../util/pokemons-favoritos';
 import { RouterLink } from '@angular/router';
-import { PokeApiResponse, PokeApiDetailsResponse } from '../../models/poke-api';
+import { PokeApiService } from '../../services/poke-api.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-listagem-pokemons',
-  imports: [CardPokemon, RouterLink],
+  imports: [RouterLink, AsyncPipe, CardPokemon],
   templateUrl: './listagem-pokemons.html',
 })
 export class ListagemPokemons implements OnInit {
-  public pokemons: Pokemon[] = [];
+  public pokemons$?: Observable<Pokemon[]>;
 
   public pokemonsFavoritos = pokemonsFavoritos;
   public alternarStatusPokemon = alternarStatusPokemon;
 
-  private readonly url: string = 'https://pokeapi.co/api/v2/pokemon/';
-  private readonly http = inject(HttpClient);
+  private readonly pokeApiService = inject(PokeApiService);
 
   ngOnInit(): void {
-    this.http.get<PokeApiResponse>(this.url).subscribe((obj) => {
-      const arrayResultados: { name: string; url: string }[] = obj.results;
-
-      for (const resultado of arrayResultados) {
-        this.http.get<PokeApiDetailsResponse>(resultado.url).subscribe((objDetalhes) => {
-          const pokemon = this.mapearPokemon(objDetalhes);
-
-          this.pokemons.push(pokemon);
-        });
-      }
-    });
-  }
-
-  private mapearPokemon(obj: PokeApiDetailsResponse): Pokemon {
-    return {
-      id: obj.id,
-      nome: converterParaTitleCase(obj.name),
-      urlSprite: obj.sprites.front_default,
-      tipos: obj.types.map((x) => converterParaTitleCase(x.type.name)),
-      favorito: pokemonsFavoritos.some((x) => x.id == obj.id),
-    };
+    this.pokemons$ = this.pokeApiService.selecionarPokemons();
   }
 }

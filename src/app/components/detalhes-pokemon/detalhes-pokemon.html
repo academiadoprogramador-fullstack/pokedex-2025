@@ -2,86 +2,88 @@
 
 <hr />
 
-<div class="row g-3">
-  <div class="col-lg-4">
-    <app-card-pokemon
-      [pokemon]="detalhesDoPokemon"
-      (statusFavoritoAlterado)="alternarStatusPokemon($event)"
-    ></app-card-pokemon>
-  </div>
+@if (detalhesDoPokemon$ | async; as detalhesDoPokemon) {
+  <div class="row g-3">
+    <div class="col-lg-4">
+      <app-card-pokemon
+        [pokemon]="detalhesDoPokemon"
+        (statusFavoritoAlterado)="alternarStatusPokemon($event)"
+      ></app-card-pokemon>
+    </div>
 
-  <div class="col">
-    <div class="d-grid">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center gap-4">
-          <span class="text-secondary fs-2">#{{ detalhesDoPokemon?.id }}</span>
-          <h2 class="mb-0">{{ detalhesDoPokemon?.nome }}</h2>
+    <div class="col">
+      <div class="d-grid">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-4">
+            <span class="text-secondary fs-2">#{{ detalhesDoPokemon?.id }}</span>
+            <h2 class="mb-0">{{ detalhesDoPokemon?.nome }}</h2>
+          </div>
+
+          <div class="d-flex justify-content-center gap-2">
+            @for (tipo of detalhesDoPokemon?.tipos; track $index) {
+              <span
+                class="badge rounded-pill text-light fs-6"
+                [ngClass]="mapeamentoDeCoresPorTipo[tipo]"
+                >{{ tipo }}</span
+              >
+            }
+          </div>
         </div>
 
-        <div class="d-flex justify-content-center gap-2">
-          @for (tipo of detalhesDoPokemon?.tipos; track $index) {
-            <span
-              class="badge rounded-pill text-light fs-6"
-              [ngClass]="mapeamentoDeCoresPorTipo[tipo]"
-              >{{ tipo }}</span
-            >
-          }
-        </div>
-      </div>
+        <hr />
 
-      <hr />
+        <section>
+          <h3 class="fw-normal">Sprites</h3>
 
-      <section>
-        <h3 class="fw-normal">Sprites</h3>
-
-        <div class="row g-3 mt-3">
-          @for (sprite of detalhesDoPokemon?.sprites; track $index) {
-            <div class="col-2">
-              <div class="card h-100">
-                <div class="card-body">
-                  <img class="img-fluid my-auto" style="max-height: 100px" [src]="sprite" />
+          <div class="row g-3 mt-3">
+            @for (sprite of detalhesDoPokemon?.sprites; track $index) {
+              <div class="col-2">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <img class="img-fluid my-auto" style="max-height: 100px" [src]="sprite" />
+                  </div>
                 </div>
               </div>
-            </div>
-          }
-        </div>
-      </section>
-
-      <hr />
-
-      <section>
-        <h3 class="fw-normal">Sons</h3>
-
-        <div class="table-responsive mt-4">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th class="ps-3">Atual</th>
-                <th class="ps-3">Antigo</th>
-              </tr>
-            </thead>
-
-            @if (detalhesDoPokemon) {
-              <tbody>
-                <tr>
-                  <td>
-                    <audio controls class="mt-2" style="height: 40px; max-width: 180px">
-                      <source [src]="detalhesDoPokemon.sons.atual" type="audio/ogg" />
-                      Seu navegador não suporta o elemento audio.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls class="mt-2" style="height: 40px; max-width: 180px">
-                      <source [src]="detalhesDoPokemon.sons.antigo" type="audio/ogg" />
-                      Seu navegador não suporta o elemento audio.
-                    </audio>
-                  </td>
-                </tr>
-              </tbody>
             }
-          </table>
-        </div>
-      </section>
+          </div>
+        </section>
+
+        <hr />
+
+        <section>
+          <h3 class="fw-normal">Sons</h3>
+
+          <div class="table-responsive mt-4">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="ps-3">Atual</th>
+                  <th class="ps-3">Antigo</th>
+                </tr>
+              </thead>
+
+              @if (detalhesDoPokemon) {
+                <tbody>
+                  <tr>
+                    <td>
+                      <audio controls class="mt-2" style="height: 40px; max-width: 180px">
+                        <source [src]="detalhesDoPokemon.sons.atual" type="audio/ogg" />
+                        Seu navegador não suporta o elemento audio.
+                      </audio>
+                    </td>
+                    <td>
+                      <audio controls class="mt-2" style="height: 40px; max-width: 180px">
+                        <source [src]="detalhesDoPokemon.sons.antigo" type="audio/ogg" />
+                        Seu navegador não suporta o elemento audio.
+                      </audio>
+                    </td>
+                  </tr>
+                </tbody>
+              }
+            </table>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
-</div>
+}
