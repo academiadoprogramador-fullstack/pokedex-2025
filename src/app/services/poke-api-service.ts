@@ -10,10 +10,9 @@ import { forkJoin, map, Observable, switchMap } from 'rxjs';
   providedIn: 'root',
 })
 export class PokeApiService {
-  private readonly url: string = 'https://pokeapi.co/api/v2/pokemon/';
+  private readonly url: string = 'https://pokeapi.co/api/v2/pokemon';
   private readonly http = inject(HttpClient);
 
-  // requisitar dados externos
   public selecionarPokemons(): Observable<Pokemon[]> {
     return this.http.get<PokeApiResponse>(this.url).pipe(
       switchMap((obj) => {
@@ -34,7 +33,6 @@ export class PokeApiService {
       .pipe(map(this.mapearDetalhesDoPokemon));
   }
 
-  // mapear dados para os componentes
   private mapearPokemon(obj: PokeApiDetailsResponse): Pokemon {
     return {
       id: obj.id,
