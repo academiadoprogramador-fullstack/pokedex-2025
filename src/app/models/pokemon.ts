@@ -7,11 +7,6 @@ export interface Pokemon {
 }
 
 export interface DetalhesDoPokemon extends Pokemon {
-  sons: SonsDoPokemon;
-  sprites: string[];
-}
-
-export interface SonsDoPokemon {
-  atual: string;
-  antigo: string;
+  sons: { atual: string; antigo: string };
+  sprites: (string | undefined)[];
 }

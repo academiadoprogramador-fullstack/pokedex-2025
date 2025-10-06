@@ -5,6 +5,7 @@ import { converterParaTitleCase } from '../../util/converter-para-title-case';
 import { CardPokemon } from '../card-pokemon/card-pokemon';
 import { alternarStatusPokemon, pokemonsFavoritos } from '../../util/pokemons-favoritos';
 import { RouterLink } from '@angular/router';
+import { PokeApiResponse, PokeApiDetailsResponse } from '../../models/poke-api';
 
 @Component({
   selector: 'app-listagem-pokemons',
@@ -21,11 +22,11 @@ export class ListagemPokemons implements OnInit {
   private readonly http = inject(HttpClient);
 
   ngOnInit(): void {
-    this.http.get(this.url).subscribe((obj: any) => {
-      const arrayResultados: any[] = obj.results;
+    this.http.get<PokeApiResponse>(this.url).subscribe((obj) => {
+      const arrayResultados: { name: string; url: string }[] = obj.results;
 
-      for (let resultado of arrayResultados) {
-        this.http.get(resultado.url).subscribe((objDetalhes) => {
+      for (const resultado of arrayResultados) {
+        this.http.get<PokeApiDetailsResponse>(resultado.url).subscribe((objDetalhes) => {
           const pokemon = this.mapearPokemon(objDetalhes);
 
           this.pokemons.push(pokemon);
@@ -34,12 +35,12 @@ export class ListagemPokemons implements OnInit {
     });
   }
 
-  private mapearPokemon(obj: any): Pokemon {
+  private mapearPokemon(obj: PokeApiDetailsResponse): Pokemon {
     return {
       id: obj.id,
       nome: converterParaTitleCase(obj.name),
       urlSprite: obj.sprites.front_default,
-      tipos: obj.types.map((x: any) => converterParaTitleCase(x.type.name)),
+      tipos: obj.types.map((x) => converterParaTitleCase(x.type.name)),
       favorito: pokemonsFavoritos.some((x) => x.id == obj.id),
     };
   }
