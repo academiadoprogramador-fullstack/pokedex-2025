@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DetalhesDoPokemon } from '../../models/pokemon';
@@ -20,9 +19,6 @@ export class DetalhesPokemon implements OnInit {
 
   public alternarStatusPokemon = alternarStatusPokemon;
 
-  private readonly url: string = 'https://pokeapi.co/api/v2/pokemon';
-
-  private readonly http = inject(HttpClient);
   private readonly route = inject(ActivatedRoute);
   private readonly pokeApiService = inject(PokeApiService);
 
