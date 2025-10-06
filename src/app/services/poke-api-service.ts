@@ -4,6 +4,7 @@ import { PokeApiResponse, PokeApiDetailsResponse } from '../models/poke-api';
 import { DetalhesDoPokemon, Pokemon } from '../models/pokemon';
 import { converterParaTitleCase } from '../util/converter-para-title-case';
 import { pokemonsFavoritos } from '../util/pokemons-favoritos';
+import { forkJoin, map, Observable, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,34 +14,24 @@ export class PokeApiService {
   private readonly http = inject(HttpClient);
 
   // requisitar dados externos
-  public selecionarPokemons(): Pokemon[] {
-    const pokemons: Pokemon[] = [];
+  public selecionarPokemons(): Observable<Pokemon[]> {
+    return this.http.get<PokeApiResponse>(this.url).pipe(
+      switchMap((obj) => {
+        const requests = obj.results.map((r) =>
+          this.http.get<PokeApiDetailsResponse>(r.url).pipe(map(this.mapearPokemon)),
+        );
 
-    this.http.get<PokeApiResponse>(this.url).subscribe((obj) => {
-      const arrayResultados: { name: string; url: string }[] = obj.results;
-
-      for (const resultado of arrayResultados) {
-        this.http.get<PokeApiDetailsResponse>(resultado.url).subscribe((objDetalhes) => {
-          const pokemon = this.mapearPokemon(objDetalhes);
-
-          pokemons.push(pokemon);
-        });
-      }
-    });
-
-    return pokemons;
+        return forkJoin(requests);
+      }),
+    );
   }
 
-  public selecionarDetalhesPokemon(pokemonId: number): DetalhesDoPokemon | undefined {
+  public selecionarDetalhesPokemon(pokemonId: number): Observable<DetalhesDoPokemon> {
     const urlCompleto = `${this.url}/${pokemonId}`;
 
-    let detalhesDoPokemon: DetalhesDoPokemon | undefined;
-
-    this.http.get<PokeApiDetailsResponse>(urlCompleto).subscribe((objDetalhes) => {
-      detalhesDoPokemon = this.mapearDetalhesDoPokemon(objDetalhes);
-    });
-
-    return detalhesDoPokemon;
+    return this.http
+      .get<PokeApiDetailsResponse>(urlCompleto)
+      .pipe(map(this.mapearDetalhesDoPokemon));
   }
 
   // mapear dados para os componentes

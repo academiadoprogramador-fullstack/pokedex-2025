@@ -2,19 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DetalhesDoPokemon } from '../../models/pokemon';
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
 import { CardPokemon } from '../card-pokemon/card-pokemon';
 import { alternarStatusPokemon } from '../../util/pokemons-favoritos';
 import { PokeApiService } from '../../services/poke-api-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-detalhes-pokemon',
-  imports: [NgClass, CardPokemon],
+  imports: [NgClass, AsyncPipe, CardPokemon],
   templateUrl: './detalhes-pokemon.html',
 })
 export class DetalhesPokemon implements OnInit {
-  public detalhesDoPokemon?: DetalhesDoPokemon;
+  public detalhesDoPokemon$?: Observable<DetalhesDoPokemon>;
   public mapeamentoDeCoresPorTipo = mapeamentoDeCoresPorTipo;
 
   public alternarStatusPokemon = alternarStatusPokemon;
@@ -33,8 +34,6 @@ export class DetalhesPokemon implements OnInit {
 
     const pokemonId = parseInt(pokemonIdParam);
 
-    this.detalhesDoPokemon = this.pokeApiService.selecionarDetalhesPokemon(pokemonId);
-
-    console.log(this.detalhesDoPokemon);
+    this.detalhesDoPokemon$ = this.pokeApiService.selecionarDetalhesPokemon(pokemonId);
   }
 }
