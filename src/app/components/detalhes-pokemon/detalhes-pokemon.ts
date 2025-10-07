@@ -4,9 +4,9 @@ import { DetalhesDoPokemon } from '../../models/pokemon';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { mapeamentoDeCoresPorTipo } from '../../util/mapeamento-de-cores-por-tipo';
 import { CardPokemon } from '../card-pokemon/card-pokemon';
-import { alternarStatusPokemon } from '../../util/pokemons-favoritos';
 import { PokeApiService } from '../../services/poke-api-service';
 import { Observable } from 'rxjs';
+import { LocalStorageService } from '../../services/local-storage-service';
 
 @Component({
   selector: 'app-detalhes-pokemon',
@@ -17,8 +17,7 @@ export class DetalhesPokemon implements OnInit {
   public detalhesDoPokemon$?: Observable<DetalhesDoPokemon>;
   public mapeamentoDeCoresPorTipo = mapeamentoDeCoresPorTipo;
 
-  public alternarStatusPokemon = alternarStatusPokemon;
-
+  public readonly localStorageService = inject(LocalStorageService);
   private readonly route = inject(ActivatedRoute);
   private readonly pokeApiService = inject(PokeApiService);
 
