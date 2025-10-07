@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Pokemon } from '../../models/pokemon';
 import { CardPokemon } from '../card-pokemon/card-pokemon';
-import { alternarStatusPokemon, pokemonsFavoritos } from '../../util/pokemons-favoritos';
 import { RouterLink } from '@angular/router';
 import { PokeApiService } from '../../services/poke-api-service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { LocalStorageService } from '../../services/local-storage-service';
 
 @Component({
   selector: 'app-listagem-pokemons',
@@ -15,12 +15,15 @@ import { AsyncPipe } from '@angular/common';
 export class ListagemPokemons implements OnInit {
   public pokemons$?: Observable<Pokemon[]>;
 
-  public pokemonsFavoritos = pokemonsFavoritos;
-  public alternarStatusPokemon = alternarStatusPokemon;
+  public pokemonsFavoritos$?: Observable<Pokemon[]>;
+  // public alternarStatusPokemon = alternarStatusPokemon;
 
+  public readonly localStorageService = inject(LocalStorageService);
   private readonly pokeApiService = inject(PokeApiService);
 
   ngOnInit(): void {
     this.pokemons$ = this.pokeApiService.selecionarPokemons();
+
+    this.pokemonsFavoritos$ = this.localStorageService.selecionarFavoritos();
   }
 }
