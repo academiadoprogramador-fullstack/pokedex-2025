@@ -14,8 +14,10 @@ export class PokeApiService {
   private readonly http = inject(HttpClient);
   private readonly localStorageService = inject(LocalStorageService);
 
-  public selecionarPokemons(): Observable<Pokemon[]> {
-    return this.http.get<PokeApiResponse>(this.url).pipe(
+  public selecionarPokemons(offset: number = 0): Observable<Pokemon[]> {
+    const urlCompleto = `${this.url}?offset=${offset}`;
+
+    return this.http.get<PokeApiResponse>(urlCompleto).pipe(
       switchMap((obj) => {
         const requests = obj.results.map((r) => this.http.get<PokeApiDetailsResponse>(r.url));
 
