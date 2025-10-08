@@ -4,7 +4,7 @@
 
 <div class="row justify-content-center g-2 mt-3">
   @for (pokemon of pokemonsFavoritos$ | async; track pokemon.nome) {
-    <div class="col-3 col-md-1">
+    <div class="col-3 col-md-2 col-lg-1">
       <a [routerLink]="['/pokemons', pokemon.id]" [title]="pokemon.nome">
         <div class="card border-2 rounded-circle">
           <div class="card-body text-center">
@@ -16,9 +16,9 @@
   }
 </div>
 
-<div class="row g-3 mt-3">
+<div class="row justify-content-center g-3 mt-3">
   @for (pokemon of pokemons$ | async; track pokemon.nome) {
-    <div class="col-md-3" style="min-height: 200px">
+    <div class="col-md-5 col-xl-3" style="min-height: 200px">
       <app-card-pokemon
         [pokemon]="pokemon"
         [exibirLink]="true"

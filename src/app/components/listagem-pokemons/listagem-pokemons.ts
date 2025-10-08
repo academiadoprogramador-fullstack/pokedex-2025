@@ -13,16 +13,14 @@ import { LocalStorageService } from '../../services/local-storage-service';
   templateUrl: './listagem-pokemons.html',
 })
 export class ListagemPokemons implements OnInit {
-  public pokemons$?: Observable<Pokemon[]>;
-
-  public pokemonsFavoritos$?: Observable<Pokemon[]>;
-
   public readonly localStorageService = inject(LocalStorageService);
   private readonly pokeApiService = inject(PokeApiService);
 
-  ngOnInit(): void {
-    this.pokemons$ = this.pokeApiService.selecionarPokemons();
+  public pokemonsFavoritos$?: Observable<Pokemon[]>;
+  public pokemons$?: Observable<Pokemon[]>;
 
+  ngOnInit(): void {
     this.pokemonsFavoritos$ = this.localStorageService.selecionarFavoritos();
+    this.pokemons$ = this.pokeApiService.selecionarPokemons();
   }
 }
