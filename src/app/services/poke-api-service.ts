@@ -14,6 +14,28 @@ export class PokeApiService {
   private readonly http = inject(HttpClient);
   private readonly localStorageService = inject(LocalStorageService);
 
+  public selecionarPokemonsPagina(offset = 0): Observable<Pokemon[]> {
+    const url = `${this.url}?offset=${offset}&limit=20`;
+
+    return this.http.get<PokeApiResponse>(url).pipe(
+      switchMap((lista) => {
+        const detailRequests = lista.results.map((r) =>
+          this.http.get<PokeApiDetailsResponse>(r.url),
+        );
+        return forkJoin(detailRequests);
+      }),
+      withLatestFrom(this.localStorageService.selecionarFavoritos()),
+      map(([detalhes, favoritos]) => {
+        return detalhes
+          .map((d) => this.mapearPokemon(d))
+          .map((p) => ({
+            ...p,
+            favorito: favoritos.some((f) => f.id === p.id),
+          }));
+      }),
+    );
+  }
+
   public selecionarPokemons(): Observable<Pokemon[]> {
     return this.http.get<PokeApiResponse>(this.url).pipe(
       switchMap((obj) => {

@@ -3,7 +3,7 @@
 <hr />
 
 <div class="row justify-content-center g-2 mt-3">
-  @for (pokemon of pokemonsFavoritos$ | async; track pokemon.nome) {
+  @for (pokemon of pokemonsFavoritos$ | async; track pokemon.id) {
     <div class="col-3 col-md-1">
       <a [routerLink]="['/pokemons', pokemon.id]" [title]="pokemon.nome">
         <div class="card border-2 rounded-circle">
@@ -17,7 +17,7 @@
 </div>
 
 <div class="row g-3 mt-3">
-  @for (pokemon of pokemons$ | async; track pokemon.nome) {
+  @for (pokemon of pokemons$ | async; track pokemon.id) {
     <div class="col-md-3" style="min-height: 200px">
       <app-card-pokemon
         [pokemon]="pokemon"
@@ -26,4 +26,13 @@
       ></app-card-pokemon>
     </div>
   }
+</div>
+
+<div class="text-center my-3">
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-primary" (click)="carregarMais()" [disabled]="offsetFinalAlcancado">
+      <i class="bi bi-arrow-clockwise my-auto me-2"></i>
+      Carregar mais
+    </button>
+  </div>
 </div>
