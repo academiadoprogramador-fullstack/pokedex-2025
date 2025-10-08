@@ -13,25 +13,25 @@ import { LocalStorageService } from '../../services/local-storage-service';
   templateUrl: './listagem-pokemons.html',
 })
 export class ListagemPokemons implements OnInit {
+  public readonly localStorageService = inject(LocalStorageService);
+  private readonly pokeApiService = inject(PokeApiService);
+
   public pokemons$?: Observable<Pokemon[]>;
   public pokemonsFavoritos$?: Observable<Pokemon[]>;
 
-  public get offsetFinalAlcancado(): boolean {
+  public get paginaFinalAlcancada(): boolean {
     return this.proximoOffset >= 1300;
   }
 
-  private carregarMaisClick$ = new Subject<void>();
   private proximoOffset: number = 0;
-
-  public readonly localStorageService = inject(LocalStorageService);
-  private readonly pokeApiService = inject(PokeApiService);
+  private carregarMaisClick$ = new Subject<void>();
 
   ngOnInit(): void {
     this.pokemonsFavoritos$ = this.localStorageService.selecionarFavoritos();
 
     const paginaObtida$ = this.carregarMaisClick$.pipe(
       startWith(void 0),
-      filter(() => !this.offsetFinalAlcancado),
+      filter(() => !this.paginaFinalAlcancada),
       exhaustMap(() =>
         this.pokeApiService
           .selecionarPokemonsPagina(this.proximoOffset)
@@ -45,7 +45,7 @@ export class ListagemPokemons implements OnInit {
   }
 
   public carregarMais(): void {
-    if (this.offsetFinalAlcancado) return;
+    if (this.paginaFinalAlcancada) return;
 
     this.carregarMaisClick$.next();
   }
