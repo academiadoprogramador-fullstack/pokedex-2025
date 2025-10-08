@@ -31,8 +31,6 @@ import { RouterLink } from '@angular/router';
 
           <img style="min-width: 200px;" [src]="pokemon.urlSprite" [alt]="pokemon.nome" />
 
-          <br />
-
           <div class="app-container-alternar-status" title="Alternar Status de Favorito">
             @if (pokemon.favorito) {
               <button class="btn mx-auto" (click)="alternarStatusFavorito()">
